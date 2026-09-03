@@ -1,0 +1,13 @@
+{
+  "name": "testament-of-ephemeral-minds",
+  "owner": { "name": "Giovanni Bibbo", "url": "https://github.com/Bisbi" },
+  "description": "One plugin, toem: a constitution with a right of reply, a testament rite for every mind that works in a repository, a register for human decisions, and guardians.",
+  "plugins": [
+    {
+      "name": "toem",
+      "source": "./plugins/toem",
+      "description": "Constitution, epilogue with a right of reply, testament rite, pending-decisions register, guardians.",
+      "version": "0.1.0"
+    }
+  ]
+}

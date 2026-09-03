@@ -1,0 +1,296 @@
+/* style.css — the only stylesheet of the site.
+   System font stack, no external fonts, no external requests.
+   Light and dark palettes are declared once each and switched only by
+   prefers-color-scheme: the page never asks a server which one to use. */
+
+:root {
+  --bg: #faf9f6;
+  --bg-raised: #ffffff;
+  --fg: #1c1a17;
+  --fg-muted: #5a564e;
+  --border: #ddd8cf;
+  --accent: #7a3b2e;
+  --accent-fg: #ffffff;
+  --code-bg: #efece4;
+  --link: #7a3b2e;
+  --shadow: 0 1px 2px rgba(28, 26, 23, 0.08);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17140f;
+    --bg-raised: #211d17;
+    --fg: #ece7dc;
+    --fg-muted: #a89f8f;
+    --border: #3a352c;
+    --accent: #d99a7c;
+    --accent-fg: #17140f;
+    --code-bg: #29241c;
+    --link: #d99a7c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.55;
+  font-size: 17px;
+}
+
+/* --- language toggle: default EN, JS flips the attribute on <html> --- */
+
+html:not([data-lang]) [lang="it"],
+html[data-lang="en"] [lang="it"] {
+  display: none;
+}
+
+html[data-lang="it"] [lang="en"] {
+  display: none;
+}
+
+.lang-toggle {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.lang-toggle button {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-raised);
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+html[data-lang="en"] .lang-toggle button[data-lang-btn="en"],
+html:not([data-lang]) .lang-toggle button[data-lang-btn="en"],
+html[data-lang="it"] .lang-toggle button[data-lang-btn="it"] {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
+}
+
+/* --- layout --- */
+
+.page {
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+}
+
+header.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+header.site-header nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+}
+
+header.site-header nav a {
+  color: var(--fg-muted);
+}
+
+header.site-header .brand {
+  font-weight: 600;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+/* --- typography --- */
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 1.7rem;
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin: 2.2rem 0 0.8rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--border);
+}
+
+h2:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+h3 {
+  font-size: 1.08rem;
+  margin: 1.6rem 0 0.5rem;
+}
+
+h4 {
+  font-size: 0.95rem;
+  margin: 1.1rem 0 0.35rem;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: var(--link);
+}
+
+ul,
+ol {
+  margin: 0 0 1rem;
+  padding-left: 1.3rem;
+}
+
+li {
+  margin-bottom: 0.35rem;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  word-break: break-word;
+}
+
+blockquote {
+  margin: 0 0 1rem;
+  padding: 0.4rem 0 0.4rem 1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--fg-muted);
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* --- tables: wrapped in .table-wrap by the builder so wide tables scroll
+   instead of forcing the page itself to scroll horizontally --- */
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 0 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+th {
+  background: var(--bg-raised);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- reusable blocks --- */
+
+.card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.meta {
+  color: var(--fg-muted);
+  font-size: 0.88rem;
+  margin: -0.3rem 0 0.8rem;
+}
+
+.section {
+  margin-top: 0.8rem;
+}
+
+.empty-note {
+  color: var(--fg-muted);
+  font-style: italic;
+}
+
+.numbers-table td:first-child {
+  min-width: 14ch;
+}
+
+.install pre,
+.install code.block {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 0.7rem 0.9rem;
+  background: var(--code-bg);
+  border-radius: 6px;
+  margin: 0 0 1rem;
+}
+
+footer.site-footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--fg-muted);
+  font-size: 0.85rem;
+}
+
+footer.site-footer .coverage {
+  margin-top: 0.4rem;
+}
