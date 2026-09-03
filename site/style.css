@@ -315,6 +315,22 @@ blockquote p:last-child {
   color: var(--text-mute);
 }
 
+/* A side remark: smaller, quieter, still full contrast against its surface. */
+.note {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-mute);
+  max-width: var(--measure);
+}
+
+/* Where a thing is typed: the conversation, or the terminal. */
+.where {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-mute);
+  margin-bottom: 12px;
+}
+
 /* --- tables: the builder wraps every table so a wide one scrolls on its own
    instead of forcing the page to scroll ---------------------------------- */
 
@@ -350,26 +366,28 @@ tr:last-child td {
   border-bottom: none;
 }
 
-/* --- the hero panel ------------------------------------------------------- */
+/* --- the booklet: nine leaves in one page --------------------------------- */
 
-/* The whole page is drawn with hairlines, so the hero is a panel of borders and
-   not of shadows: one accent rule on the left, one border everywhere else. */
-.hero {
+/* The whole page is drawn with hairlines, so a leaf is a panel of borders and
+   not of shadows. The cover adds the single accent rule on the left. */
+.booklet {
+  perspective: 1200px;
+}
+
+.leaf {
   background: var(--surface-1);
   border: 1px solid var(--border);
-  border-left: 2px solid var(--accent);
   border-radius: 16px;
   padding: 48px;
+  margin: 0 0 64px;
 }
 
-.hero h1 {
-  font-size: 46px;
-  line-height: 1.1;
-  max-width: 40ch;
-  margin-bottom: 24px;
+.leaf > h2:first-child,
+.cover-tilt > h2:first-child {
+  margin-top: 0;
 }
 
-.hero .lead {
+.leaf .lead {
   font-size: 20px;
   line-height: 1.45;
   color: var(--text-mute);
@@ -377,9 +395,308 @@ tr:last-child td {
   margin-bottom: 32px;
 }
 
-.hero .lead strong {
+.leaf .lead strong {
   color: var(--text);
   font-weight: 500;
+}
+
+/* The hidden state belongs to a class that only booklet.js adds. Without the
+   script, and under reduced motion, every leaf is simply visible.
+
+   The rotation hinges on the leaf's top edge and tips the rest away from the
+   viewer. The sign matters: tipping a tall leaf towards the viewer projects it
+   past the vanishing point and it grows thousands of pixels wide, which the
+   page then has to scroll sideways to hold. */
+.booklet-motion .leaf {
+  opacity: 0;
+  transform: rotateX(-10deg) translateY(24px);
+  transform-origin: top center;
+}
+
+.booklet-motion .leaf.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 400ms var(--ease), transform 400ms var(--ease);
+}
+
+.cover {
+  border-left: 2px solid var(--accent);
+}
+
+.cover-tilt {
+  transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 220ms var(--ease);
+}
+
+.cover h1 {
+  font-size: 46px;
+  line-height: 1.1;
+  max-width: 40ch;
+  margin-bottom: 24px;
+}
+
+/* --- leaf 2: the three pieces, which are not three identical cards -------- */
+
+.pieces {
+  display: grid;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 940px) {
+  .pieces {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.piece h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.piece p {
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.piece p:last-child {
+  margin-bottom: 0;
+}
+
+.piece.letter-piece blockquote {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* A row that carries a paragraph and an illustration side by side. */
+.with-figure {
+  display: grid;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (min-width: 940px) {
+  .with-figure {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+  }
+}
+
+.figure {
+  margin: 0;
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--decor);
+}
+
+.figure figcaption {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-mute);
+}
+
+/* --- leaf 3: the sequence a mind walks through --------------------------- */
+
+.sequence {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  max-width: var(--measure);
+}
+
+.sequence > li {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 16px;
+}
+
+.sequence > li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 22px;
+  text-align: center;
+  color: var(--text-mute);
+}
+
+.questions {
+  list-style: none;
+  max-width: var(--measure);
+  margin: 0;
+  padding: 16px;
+  background: var(--decor);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.questions li {
+  margin: 0;
+}
+
+/* --- leaf 4: the curation deck ------------------------------------------- */
+
+.deck-track {
+  position: relative;
+}
+
+.deck-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.deck-card:last-child {
+  margin-bottom: 0;
+}
+
+.deck-card .step {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-mute);
+  margin: 0 0 8px;
+}
+
+.deck-card h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+}
+
+.deck-card p,
+.deck-card li {
+  font-size: 15px;
+  line-height: 1.55;
+  max-width: 62ch;
+}
+
+.deck-card .where {
+  color: var(--text-mute);
+}
+
+/* The chapter is as tall as its steps; inside it one screen stays put while the
+   stack turns, so the reader's scroll is what brings a card forward. Narrow, or
+   where motion is unwelcome, the same seven cards are a plain vertical list:
+   the stack needs the script to choose a card, and the script does not run. */
+@media (min-width: 940px) and (prefers-reduced-motion: no-preference) {
+  .deck-track {
+    height: calc(100vh + var(--steps) * 62vh);
+  }
+
+  .deck-stage {
+    position: sticky;
+    top: var(--strip);
+    height: calc(100vh - var(--strip));
+    display: grid;
+    align-content: center;
+    perspective: 1200px;
+  }
+
+  .deck-cards {
+    display: grid;
+    transform-style: preserve-3d;
+  }
+
+  /* The cards behind recede and rise, so the stack is visible above the one in
+     front and the reader can see how many are still to come. */
+  .deck-card {
+    grid-area: 1 / 1;
+    margin-bottom: 0;
+    min-height: 52vh;
+    transition: transform 400ms var(--ease), opacity 400ms var(--ease);
+    transform: translateZ(calc(var(--d, 0) * -90px)) translateY(calc(var(--d, 0) * -26px));
+  }
+
+  .deck-card[data-state="now"] {
+    opacity: 1;
+  }
+
+  .deck-card[data-state="next"] {
+    opacity: 0.28;
+  }
+
+  .deck-card[data-state="past"] {
+    opacity: 0;
+    transform: translateY(56px) translateZ(-40px);
+    pointer-events: none;
+  }
+
+  .deck-card[data-state="far"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* --- leaf 7: four letters, then the whole wall --------------------------- */
+
+.excerpts {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (min-width: 940px) {
+  .excerpts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.excerpt {
+  border-left: 2px solid var(--border-strong);
+  padding-left: 16px;
+}
+
+.excerpt .letter-text {
+  margin: 0 0 12px;
+}
+
+.excerpt .attribution {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.excerpt .who {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.excerpts + .note {
+  margin-top: 24px;
+}
+
+/* --- leaf 8: what adoption creates, and what it never does --------------- */
+
+.files-table td:first-child {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.never {
+  max-width: var(--measure);
 }
 
 /* --- the install block: three real commands, copied on click -------------- */
@@ -475,60 +792,7 @@ tr:last-child td {
   color: var(--text-mute);
 }
 
-/* --- the two panels under the hero: one letter, one table ----------------- */
-
-.pair {
-  display: grid;
-  gap: 32px;
-  margin-top: 48px;
-  align-items: start;
-}
-
-@media (min-width: 940px) {
-  .pair {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  }
-}
-
-.pair h2 {
-  margin: 0 0 16px;
-  font-size: 20px;
-  line-height: 1.45;
-}
-
-.excerpt {
-  background: var(--surface-1);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 24px;
-}
-
-.excerpt .letter-text {
-  border-left: 2px solid var(--border-strong);
-  padding-left: 16px;
-  margin: 0 0 16px;
-}
-
-.excerpt .attribution {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-
-.excerpt .who {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.excerpt .source {
-  margin: 12px 0 0;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-mute);
-}
+/* --- leaf 6: the numbers, as a bare table with their register ------------- */
 
 .numbers table {
   margin: 16px 0;
@@ -826,6 +1090,17 @@ main.thesis .prose > h1 {
   margin-bottom: 0;
 }
 
+.site-footer.leaf {
+  max-width: none;
+  margin: 0;
+  padding: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.site-footer.leaf p {
+  max-width: var(--measure);
+}
+
 /* --- narrow screens ------------------------------------------------------- */
 
 @media (max-width: 700px) {
@@ -863,16 +1138,17 @@ main.thesis .prose > h1 {
     padding: 32px 16px 48px;
   }
 
-  .hero {
+  .leaf {
     padding: 24px;
+    margin-bottom: 32px;
   }
 
-  .hero h1 {
+  .cover h1 {
     font-size: 34px;
     max-width: none;
   }
 
-  .hero .lead {
+  .leaf .lead {
     font-size: 18px;
   }
 
@@ -885,9 +1161,20 @@ main.thesis .prose > h1 {
     grid-template-columns: 1fr;
   }
 
-  .letter-card,
-  .excerpt {
+  .letter-card {
     padding: 16px;
+  }
+
+  .deck-card {
+    padding: 24px;
+  }
+
+  .numbers td {
+    padding: 12px 12px 12px 0;
+  }
+
+  .numbers td:last-child {
+    width: 42%;
   }
 
   .commands {
