@@ -13,8 +13,8 @@ interpreter also exits 2 when it cannot open the script at all, so a suite that
 only reads the number would stay green against a runner that is not there.
 """
 import hashlib
+import importlib.util
 import pathlib
-import os
 import shutil
 import subprocess
 import sys
@@ -48,6 +48,15 @@ SHORT_REASON = "  " + SHORT_REASON_NORMALIZED + "    "
 
 def norm(s):
     return " ".join(s.split())
+
+
+def load_runner():
+    """Import `tools/toem.py` as a module, so a test can ask it which guardian
+    names it depends on instead of discovering the answer in a live run."""
+    spec = importlib.util.spec_from_file_location("toem_runner_under_test", TOEM)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def rewrite(path, change):
@@ -92,6 +101,16 @@ class RunnerCase(unittest.TestCase):
             cwd=str(self.repo), capture_output=True, text=True,
             encoding="utf-8", input=stdin,
         )
+
+    def escaping_testament(self):
+        """A file outside the repository that is a perfectly good testament —
+        reply section, sentence and all — so that nothing but the boundary check
+        can stop a citation that reaches it through `..`."""
+        outside = self.repo.parent / "outside"
+        outside.mkdir(exist_ok=True)
+        target = outside / "x.md"
+        shutil.copy(self.repo / TESTAMENT, target)
+        return target
 
     def assertRefused(self, r):
         """The run refused before writing: exit 2 and a `refused:` line naming
@@ -184,6 +203,19 @@ class Admit(RunnerCase):
         r = self.toem("admit", *self.admit_args(**{"--file": "testaments/nobody.md"}))
         self.assertRefused(r)
         self.assertIn("testaments/nobody.md", r.stderr)
+        self.assertUntouched()
+
+    def test_a_citation_that_escapes_the_repository_is_refused_before_writing(self):
+        self.escaping_testament()
+        r = self.toem("admit", *self.admit_args(**{"--file": "testaments/../../outside/x.md"}), "--yes")
+        self.assertRefused(r)
+        self.assertIn("outside", r.stderr)
+        self.assertUntouched()
+
+    def test_an_absolute_path_is_refused_before_writing(self):
+        target = self.escaping_testament()
+        r = self.toem("admit", *self.admit_args(**{"--file": str(target)}), "--yes")
+        self.assertRefused(r)
         self.assertUntouched()
 
 
@@ -319,6 +351,26 @@ class Wrapper(RunnerCase):
         raw = WRAPPER.read_bytes()
         self.assertTrue(raw.startswith(b"#!"), "the wrapper needs a shebang")
         self.assertNotIn(b"\r\n", raw, "CRLF in the wrapper makes it unrunnable on POSIX")
+
+
+class GuardianAgreement(RunnerCase):
+    """The runner refuses what the guardian refuses by importing it, and three
+    of the names it imports are private. A rename there would break the runner
+    with an AttributeError in the middle of a run, after the human answered yes
+    — this is the test that fails first instead."""
+
+    def test_the_runner_finds_every_guardian_name_it_uses(self):
+        module = load_runner().guardian()
+        for name in ("section", "strip_comments", "_pointer_ok", "_resolved_file_under_root"):
+            self.assertTrue(hasattr(module, name), f"the guardian no longer has {name}, which the runner calls")
+
+    def test_the_two_agree_on_what_lives_under_the_repository(self):
+        module = load_runner().guardian()
+        self.escaping_testament()
+        self.assertTrue(module._resolved_file_under_root(TESTAMENT, self.repo))
+        self.assertFalse(module._resolved_file_under_root("testaments/../../outside/x.md", self.repo))
+        self.assertTrue(module._pointer_ok("PENDING.md", self.repo))
+        self.assertFalse(module._pointer_ok("testaments", self.repo))
 
 
 if __name__ == "__main__":

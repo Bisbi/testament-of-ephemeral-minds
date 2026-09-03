@@ -372,6 +372,14 @@ def cmd_admit(args):
     testament = root / cited
     if not testament.is_file():
         refuse(f"no such testament: {cited}")
+    # The prefix check above passes a path that climbs back out through `..`,
+    # and the guardian only catches that after the row is written. Asked here,
+    # with the guardian's own definition of "under the root", it is a refusal.
+    if not guardian()._resolved_file_under_root(cited, root):
+        refuse(
+            f"the citation escapes the repository, and the guardian reads nothing "
+            f"outside it: {cited}"
+        )
 
     section = reply_section(read(testament))
     if section is None:
