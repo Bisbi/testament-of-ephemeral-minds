@@ -1,0 +1,15 @@
+#!/bin/sh
+# toem [--help] <admit|decide|pending> [options] — the command a human runs to
+# append what a skill prepared. Resolves tools/toem.py relative to this script,
+# so it works from the root of the repository being written to, and runs it with
+# whichever Python 3 is on the PATH. Every argument is passed through and the
+# runner's exit code is returned; exit 127 when no interpreter is found.
+set -eu
+
+PY=$(command -v python3 || command -v python || true)
+if [ -z "$PY" ]; then
+  echo "toem: no python3 or python on the PATH" >&2
+  exit 127
+fi
+
+exec "$PY" "$(dirname "$0")/../tools/toem.py" "$@"

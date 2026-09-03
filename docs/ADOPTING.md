@@ -66,6 +66,10 @@ package carries, with the same tags.
   `[not yet executed anywhere — declared]`
 - **`/toem:decide` walks a human through a decision row and stops before the
   commit.** `[not yet executed anywhere — declared]`
+- **The hand that appends is a command the human runs: `toem` writes into the
+  charter only when a human runs it and answers yes.** The skills prepare the
+  text and print that command with its arguments filled in; they never append.
+  See *The runner*, below. `[not yet executed anywhere — declared]`
 
 ---
 
@@ -94,8 +98,9 @@ answer is admitted below the epilogue, in the additions section.
   propose candidates, and it says how many files and roughly how many words it
   will read before it reads them.** In the source node the admission was made
   through an interface that wrote the file; this package gives the gesture the
-  honest shape, a command that prepares the text and a human's `git commit`, and
-  no repository has run it yet. `[not yet executed anywhere — declared]`
+  honest shape, a skill that prepares the text, a command the human runs to
+  append it, and a human's `git commit`, and no repository has run it yet.
+  `[not yet executed anywhere — declared]`
 - **A rectification is a new row, dated, citing the same file — the testament is
   never corrected.** `[not yet executed anywhere — declared]`
 
@@ -211,7 +216,10 @@ python3 -c 'import sys; s=" ".join(sys.argv[1].split()); print(len(s), repr(s))'
   a human's row.** That would invent a synthetic author for a decision that has
   a human one. A single runner for both sections must accept two distinct forms
   of citation, not force the human decision into the shape designed for minds.
-  `[not yet executed anywhere — declared]`
+  That is why `toem` has two subcommands and not one: `admit` accepts only a
+  file under `testaments/` and takes its sentence from the mind that wrote it,
+  `decide` accepts a repo-relative path or a commit hash and takes every field
+  from the human. `[not yet executed anywhere — declared]`
 - **Do not promise that the commit author field distinguishes the two hands.**
   In a repository where every session commits with the identity of the same
   person — verified in the source node: over two thousand commits, a single
@@ -290,8 +298,8 @@ rows and, when `EPILOGUE.sha256` exists, the epilogue text.
 ## The three grammars
 
 The guardians read these, exactly. `/toem:decide` prints the first two filled
-in, `/toem:admit` the third; both stop there. You paste, you run the guardian,
-you commit.
+in, `/toem:admit` the third; both stop there. Then you run the command of the
+next section, answer yes, and commit.
 
 **A decision that has been taken.** Three lines, inside the anchors of
 `CONSTITUTION.md § Decisions`, added below whatever is already there:
@@ -310,7 +318,7 @@ Conditions (may say no): <what would make this decision wrong>. Requirements (co
 
 **A reply admitted.** Two lines, above the closing anchor of
 `CONSTITUTION.md § Additions`. `/toem:admit` prints them filled in, with the
-matching entry for `CORRESPONDENCE.md`, and stops:
+matching entry for `CORRESPONDENCE.md`, and stops before writing them:
 
 ```
 **<the sentence, as the mind wrote it>**
@@ -321,9 +329,82 @@ The reason for an admitted row is copied into `CORRESPONDENCE.md`, under
 **Admitted rows**. The charter holds what was decided, that file holds why, and
 the two are kept apart so neither gets edited to tidy up the other.
 
+## The runner
+
+Typing three lines into the right place of a file, by hand, at the end of a day,
+is where a practice quietly stops being followed. `toem` is the command that
+does the typing — and it is the **human's** command, not the agent's. The skill
+prepares and prints; the runner writes, and only when a human runs it and
+answers yes.
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit \
+  --file "testaments/<file>.md" \
+  --sentence "<the sentence, as the mind wrote it>" \
+  --by "<name>" \
+  --reason "<at least 40 characters once whitespace is collapsed>"
+
+bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" decide \
+  --decision "<the decision, in one sentence>" \
+  --review-by <YYYY-MM-DD> \
+  --conditions "<what would make this decision wrong>" \
+  --requirements "<what has to be built for it to hold>" \
+  --pointer "<file path or commit hash>" \
+  --by "<name>" \
+  --reason "<the reason>" \
+  --from-pending A-01
+
+bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" pending \
+  --what "<the question, phrased so that an answer closes it>" \
+  --by "<name>" \
+  --closes "<what has to exist or be said for this row to leave>"
+```
+
+Run from the root of the adopting repository. Python 3, standard library only;
+`bin/toem` is a POSIX `sh` wrapper that uses `python3` or `python`, whichever is
+on the PATH.
+
+What each of them does is the same shape, and the shape is the point:
+
+1. **It refuses before it writes.** A sentence that is not in that testament's
+   reply section word for word, a sentence already among the additions, a
+   pointer that resolves to nothing that already exists, a reason under 40
+   normalized characters, an empty conditions field, a register row
+   `--from-pending` cannot find, a charter whose anchors are gone: each is
+   refused with exit code 2 and a message naming what it looked for and where,
+   before a byte is written. The refusals are the guardians' own rules, applied
+   early — the same module, not a second copy of it.
+2. **It shows what it will write, then asks.** The two blocks are printed
+   exactly as they will appear, and then `Append these two blocks? [y/N]`.
+   Anything but yes writes nothing. `--dry-run` prints and exits without asking;
+   `--yes` answers for a script, and is the wrong flag for a first time.
+3. **It touches only the intended lines.** The addition row goes immediately
+   above `<!-- toem:additions:end -->`, the decision row above
+   `<!-- toem:decisions:end -->`, the entry at the end of `## Admitted rows`.
+   Everything else in those files survives byte for byte, LF endings included.
+4. **`--from-pending A-NN` keeps section 7's simultaneity mechanical.** The
+   charter row is written and the register row removed in the same run, so the
+   two cannot arrive in different commits.
+5. **It runs the guardians over what it wrote, and never commits.** Green, it
+   prints the commit command for you to run. Red, it says
+   `written but the guardians are red` and names the way back,
+   `git checkout -- CONSTITUTION.md CORRESPONDENCE.md`, and exits 1. It never
+   runs `git` itself, and it never pushes.
+
+- **A command that appends is not the same thing as automation that decides.**
+  Every field it writes was typed by the human; it chooses nothing, and it
+  writes nothing without a yes. What it removes is the part of the gesture where
+  a tired person puts three correct lines in the wrong place.
+  `[not yet executed anywhere — declared]`
+- **The runner refuses what the guardians would refuse, by importing them.**
+  Two independent implementations of "a pointer that exists" drift, and the one
+  that drifts first is the one nobody runs. `[not yet executed anywhere — declared]`
+
 ## The guardian commands
 
-From the root of the adopting repository:
+From the root of the adopting repository. The runner already does this for what
+it writes; this is for everything else, and for a repository whose checks should
+run it on their own:
 
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/guardians/run.sh" .

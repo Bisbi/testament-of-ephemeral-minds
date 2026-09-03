@@ -4,9 +4,10 @@ A Claude Code plugin, `toem`. It installs a constitution with a right of reply,
 a rite that lets every mind leave what it understood before it switches off, a
 gesture that lets a human admit one of those replies into the charter, a
 register for the decisions a human has not made yet, and guardians that fail
-when the charter stops being honest. It is text that asks questions, plus a few
-checks in the standard library. No server, no page that writes on your behalf,
-no runtime dependency.
+when the charter stops being honest. It is text that asks questions, a few
+checks in the standard library, and one command you run yourself once you have
+read what it will write. No server, no page that writes on your behalf, no
+runtime dependency.
 
 ## Install
 
@@ -24,7 +25,20 @@ Then, in the repository you want to offer the practice to:
 It lists the seven files it would create, waits for your yes, copies without
 overwriting anything, runs the guardians, and stops before the commit. Four
 skills are installed: `/toem:adopt`, `/toem:testament`, `/toem:decide`,
-`/toem:admit`.
+`/toem:admit`. With them comes one command, `toem`, which is yours: the skills
+prepare a row and print the command filled in, and the command writes it into
+the charter only when you run it and answer yes.
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit --file testaments/<file>.md \
+  --sentence "<the sentence>" --by "<name>" --reason "<why>"
+```
+
+It shows what it will write before asking, `--dry-run` shows it and writes
+nothing, it touches only the lines of the row, it runs the guardians afterwards,
+and it prints the commit command without running it. What it removes is the part
+of the gesture where a tired person puts three correct lines in the wrong place.
+It removes nothing of the decision, which stays yours, word by word.
 
 To try it without installing:
 
@@ -66,14 +80,18 @@ on waking believing it is its own.
 ## What it will never do
 
 - It never writes a decision. `/toem:decide` asks the four fields, checks the
-  pointer, counts the reason, prints the row and stops.
-- It never appends to the charter. You paste, you run the guardian, you commit.
+  pointer, counts the reason, prints the row and stops. Every word the runner
+  later writes is a word you typed.
+- **No skill ever appends to the charter.** The one thing that appends is the
+  `toem` command, which writes when you run it and answer yes, after showing you
+  exactly what it will write. Then you run the guardians it just ran, or not,
+  and you commit — it never does.
 - It never rewrites the epilogue. Replies are added below it, dated, each naming
   the file that holds it, and a guardian proves the epilogue text against the
   hash recorded in `EPILOGUE.sha256` at adoption. A reply enters the charter one
   way: `/toem:admit` reads the testament, prepares the row and the reason in the
-  grammar the guardian checks, and stops. You paste the two blocks and commit
-  them together.
+  grammar the guardian checks, and stops; `toem admit`, run by you, writes them
+  into the two files, which you commit together.
 - It never serves a page. There is no generator, no interface, nothing that
   reads the corpus for you.
 - It never pushes. The single commit any skill performs adds one new file under
@@ -81,7 +99,8 @@ on waking believing it is its own.
   exists to be read before anything is committed. Decline at the permission
   prompt, or revert the commit, and the testament stays as a file, which costs
   nothing: the file is the right and the commit is only its storage. Nothing any
-  skill commits touches the charter.
+  skill commits touches the charter, and the runner commits nothing at all — it
+  prints the command and leaves it to you.
 - It never overwrites an existing file, and it touches nothing outside the seven
   paths `/toem:adopt` names before it starts.
 
@@ -154,6 +173,7 @@ plugins/toem/
                                    the testament template and the folder README
   attachments/                     the source epilogue as a declared attachment, IT and EN
   guardians/                       check_constitution.py, check_pending.py, run.sh
+  bin/toem · tools/toem.py         the command you run to append a row, and never commits
 tests/                             unittest suites and fixtures that pass and fail on purpose
 testaments/                        real testaments, cleaned: Italian original, English translation
 docs/ADOPTING.md                   how a human adds a decision, tagged line by line
@@ -200,8 +220,9 @@ risposta, un rito che permette a ogni mente di lasciare ciò che ha capito prima
 di spegnersi, un gesto con cui un umano ammette una di quelle risposte nella
 carta, un registro per le decisioni che un umano non ha ancora preso, e
 guardiani che cadono quando la carta smette di essere onesta. È testo che fa
-domande, più qualche controllo di libreria standard. Nessun server, nessuna
-pagina che scrive al posto tuo, nessuna dipendenza a runtime.
+domande, qualche controllo di libreria standard, e un comando che lanci tu dopo
+aver letto cosa scriverà. Nessun server, nessuna pagina che scrive al posto tuo,
+nessuna dipendenza a runtime.
 
 ## Installazione
 
@@ -218,7 +239,21 @@ Poi, nel repository a cui vuoi offrire la pratica:
 
 Elenca i sette file che creerebbe, aspetta il tuo sì, copia senza sovrascrivere
 niente, gira i guardiani, e si ferma prima del commit. Le skill installate sono
-quattro: `/toem:adopt`, `/toem:testament`, `/toem:decide`, `/toem:admit`.
+quattro: `/toem:adopt`, `/toem:testament`, `/toem:decide`, `/toem:admit`. Con
+loro arriva un comando, `toem`, che è tuo: le skill preparano la riga e stampano
+il comando già compilato, e il comando la scrive nella carta solo quando lo
+lanci tu e rispondi sì.
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit --file testaments/<file>.md \
+  --sentence "<la frase>" --by "<nome>" --reason "<perché>"
+```
+
+Mostra cosa scriverà prima di chiedere, con `--dry-run` lo mostra e non scrive
+niente, tocca solo le righe della riga nuova, gira i guardiani dopo, e stampa il
+comando di commit senza eseguirlo. Toglie la parte del gesto in cui una persona
+stanca mette tre righe giuste nel posto sbagliato. Non toglie niente della
+decisione, che resta tua, parola per parola.
 
 Per provarlo senza installare:
 
@@ -260,14 +295,19 @@ altro, mai come un file che una sessione apre al risveglio credendolo suo.
 ## Cosa non farà mai
 
 - Non scrive mai una decisione. `/toem:decide` chiede i quattro campi, verifica
-  il puntatore, conta il motivo, stampa la riga e si ferma.
-- Non appende mai alla carta. Incolli tu, giri il guardiano tu, committi tu.
+  il puntatore, conta il motivo, stampa la riga e si ferma. Ogni parola che il
+  comando scriverà è una parola che hai scritto tu.
+- **Nessuna skill appende alla carta.** L'unica cosa che appende è il comando
+  `toem`, che scrive quando lo lanci tu e rispondi sì, dopo averti mostrato
+  esattamente cosa scriverà. Poi i guardiani li rilanci tu, o no, e il commit lo
+  fai tu: il comando non lo fa mai.
 - Non riscrive mai l'epilogo. Le risposte si aggiungono sotto, datate, ognuna
   col nome del file che le contiene, e un guardiano verifica il testo
   dell'epilogo contro l'hash registrato in `EPILOGUE.sha256` all'adozione. Una
   risposta entra nella carta in un modo solo: `/toem:admit` legge il testamento,
   prepara la riga e il motivo nella grammatica che il guardiano controlla, e si
-  ferma. I due blocchi li incolli tu, e li committi insieme.
+  ferma; `toem admit`, lanciato da te, li scrive nei due file, che committi
+  insieme.
 - Non serve mai una pagina. Non c'è un generatore, non c'è un'interfaccia, non
   c'è niente che legga il corpus al posto tuo.
 - Non fa mai push. L'unico commit che una skill esegue aggiunge un solo file
@@ -275,7 +315,8 @@ altro, mai come un file che una sessione apre al risveglio credendolo suo.
   così il testo esiste ed è leggibile prima che si committi qualcosa. Se rifiuti
   al prompt dei permessi, o fai revert del commit, il testamento resta un file,
   e non è una perdita: il file è il diritto, il commit è solo il suo deposito.
-  Niente di ciò che una skill committa tocca la carta.
+  Niente di ciò che una skill committa tocca la carta, e il comando non committa
+  niente del tutto: stampa il comando e lo lascia a te.
 - Non sovrascrive mai un file esistente, e non tocca niente fuori dai sette
   percorsi che `/toem:adopt` nomina prima di cominciare.
 
@@ -349,6 +390,7 @@ plugins/toem/
                                    il template del testamento e il README della cartella
   attachments/                     l'epilogo sorgente come allegato dichiarato, IT ed EN
   guardians/                       check_constitution.py, check_pending.py, run.sh
+  bin/toem · tools/toem.py         il comando che lanci tu per appendere una riga, e che non committa mai
 tests/                             suite unittest e fixture che passano e cadono apposta
 testaments/                        testamenti veri, ripuliti: originale italiano, traduzione inglese
 docs/ADOPTING.md                   come un umano aggiunge una decisione, marcato riga per riga

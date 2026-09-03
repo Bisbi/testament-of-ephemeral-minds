@@ -5,8 +5,9 @@ that lets every mind leave what it understood before it switches off, a register
 for the decisions a human has not made yet, and guardians that fail when the
 charter stops being honest.
 
-It is text that asks questions, plus a few checks. No server, no runtime
-dependency, no page that writes on your behalf.
+It is text that asks questions, a few checks, and one command you run yourself
+when you have read what it will write. No server, no runtime dependency, no page
+that writes on your behalf.
 
 ## What gets installed
 
@@ -38,14 +39,48 @@ before it every time.
   passing a reconstruction off as a citation.
 - **`/toem:decide`** — prepares a decision row in the exact grammar the guardians
   check: four fields, a pointer to something that already exists, a reason of at
-  least 40 characters once whitespace is collapsed. It prints the row and stops.
-  You paste it, you run the guardian, you commit.
+  least 40 characters once whitespace is collapsed. It prints the row, prints
+  the command that would write it, and stops.
 - **`/toem:admit`** — the other direction of the correspondence. A mind replied
   to the epilogue in its testament; this prepares the row that admits one
   sentence of that reply into the charter's additions, dated and citing the
   file, plus the entry that keeps the reason. It can also propose candidates,
   and it says how much of the corpus it will read before it reads it. It prints
-  the two blocks and stops.
+  the two blocks, prints the command that would write them, and stops.
+
+## The runner
+
+The skills prepare and print; nothing in them writes into the charter. What
+writes is one command, and it belongs to the human:
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit --file testaments/<file>.md \
+  --sentence "<the sentence>" --by "<name>" --reason "<why>"
+```
+
+`toem admit` appends a reply row and its reason. `toem decide` writes a decision
+row and its reason, and with `--from-pending A-NN` removes the register row it
+settles in the same run. `toem pending` adds a row that waits, numbered and
+dated for you.
+
+Each of them refuses first, then shows exactly what it will write, then asks
+`Append these two blocks? [y/N]` and writes only on a yes. `--dry-run` shows and
+writes nothing; `--yes` is for scripts, not for a first time. It touches only
+the intended lines and leaves the rest of those files byte for byte, LF
+included. It runs the guardians over what it wrote, and prints the commit
+command **without running it**: it never commits, never pushes, never calls
+`git` at all.
+
+The refusals are the guardians' own rules, applied before the write instead of
+after — a sentence that is not in that testament's reply section word for word,
+a sentence already admitted, a pointer that resolves to nothing that already
+exists, a reason under 40 normalized characters, an empty conditions field, a
+missing anchor. The runner imports the guardian to decide them, so the package
+holds one definition of a resolvable pointer rather than two that drift.
+
+Python 3, standard library only. `bin/toem` is a POSIX `sh` wrapper that runs
+`tools/toem.py` with `python3` or `python`, whichever is on the PATH, resolved
+relative to itself so it works from the root of your own repository.
 
 ## What the hooks do, and never do
 

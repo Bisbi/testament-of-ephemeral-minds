@@ -1,6 +1,6 @@
 ---
 name: admit
-description: Use when the human wants to admit a mind's reply into the constitution's additions — reads the testament they name, shows its reply to the epilogue, prepares the addition row and the correspondence entry in the exact grammar the guardians check, and stops. Never appends, never commits. Can also propose candidates from the testaments folder, declaring the reading cost first.
+description: Use when the human wants to admit a mind's reply into the constitution's additions — reads the testament they name, shows its reply to the epilogue, prepares the addition row and the correspondence entry in the exact grammar the guardians check, and prints the `toem admit` command that would append them. Never appends, never commits. Can also propose candidates from the testaments folder, declaring the reading cost first.
 ---
 
 # Admit a reply into the charter
@@ -12,10 +12,16 @@ reason kept in `CORRESPONDENCE.md`. The epilogue itself is never rewritten —
 what is added is added below it.
 
 This skill prepares that text and stops. It reads files, it counts, it prints
-two blocks. It does not open `CONSTITUTION.md` to write, does not append, does
-not edit `CORRESPONDENCE.md`, does not commit. **The hand that appends is the
-human's**, and that is not a formality: a charter a machine can extend on its
-own is no longer the record of what a human decided.
+two blocks and the command that would write them. It does not open
+`CONSTITUTION.md` to write, does not append, does not edit `CORRESPONDENCE.md`,
+does not commit. **The hand that appends is the human's**, and that is not a
+formality: a charter a machine can extend on its own is no longer the record of
+what a human decided.
+
+There is a command that appends — `toem admit` — and it belongs to the human,
+not to this skill. It writes only when they run it and answer yes, it shows
+first exactly what it will write, and it stops before the commit. What the skill
+does is fill its arguments in and print it.
 
 ## 1. Two entrances
 
@@ -101,21 +107,22 @@ grep -n -F "<the first words of the sentence>" CONSTITUTION.md
 If it is, say so and stop: a sentence admitted twice makes the section look
 fuller than the practice is.
 
-Then print both blocks, in fenced code, ready to paste. Today's date, from the
-system clock, in both.
+Then print both blocks, in fenced code. Today's date, from the system clock, in
+both. The human reads them here, in the conversation, before anything is run:
+the command prints them again, and the two have to say the same thing.
 
-**The addition row** — two lines for the human to paste **above** the closing
-anchor `<!-- toem:additions:end -->` in `CONSTITUTION.md`, below whatever rows
-are already there. You do not open that file to write: you print the block.
-The path is the file exactly as it exists, backticks included:
+**The addition row** — the two lines the runner will insert **above** the
+closing anchor `<!-- toem:additions:end -->` in `CONSTITUTION.md`, below
+whatever rows are already there. You do not open that file to write: you print
+the block. The path is the file exactly as it exists, backticks included:
 
 ```
 **<the sentence, as the mind wrote it>**
 — <YYYY-MM-DD>, `testaments/<file>.md`
 ```
 
-**The correspondence entry** — for the human to paste under `## Admitted rows`
-in `CORRESPONDENCE.md`, below whatever is already there:
+**The correspondence entry** — what the runner will append under
+`## Admitted rows` in `CORRESPONDENCE.md`, below whatever is already there:
 
 ```
 **<the same sentence, quoted exactly as it now stands in the charter>**
@@ -123,17 +130,40 @@ Admitted by <name>, <YYYY-MM-DD>.
 Reason: <the reason, ≥ 40 normalized characters>
 ```
 
-## 6. Print the guardian command, then stop
+## 6. Print the command, then stop
+
+The last thing you print is the command, filled in, to be run from the root of
+the repository. Every argument comes from what the human already said — nothing
+here is yours to invent:
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/guardians/run.sh" .
+bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit \
+  --file "testaments/<file>.md" \
+  --sentence "<the sentence, as the mind wrote it>" \
+  --by "<name>" \
+  --reason "<the reason>"
 ```
 
-Expect `constitution: ok` and `pending: ok`. If it goes red it names what it
-found: a citation that resolves to no file under the repository, a bold line
-with no citation after it, a citation left standing with its sentence deleted.
+Say what it does, because a command nobody understands gets run or refused for
+the wrong reasons: it prints the same two blocks, asks `Append these two blocks?
+[y/N]`, writes only on a yes, runs the guardians over what it wrote, and prints
+the commit command without running it. `--dry-run` shows everything and writes
+nothing; `--yes` skips the question and is for scripts, not for a first time.
 
-Then the commit message, both files in one commit — the charter without the
+It refuses, before writing a byte, what the guardians would refuse afterwards: a
+sentence that is not in that testament's reply section word for word, a sentence
+already among the additions, a reason under 40 characters once whitespace is
+collapsed, a charter whose anchors are missing. A refusal names the file and the
+section it looked in.
+
+If the guardians come back red the command says so and leaves the two files
+written, with the way back:
+
+```
+git checkout -- CONSTITUTION.md CORRESPONDENCE.md
+```
+
+The commit it prints puts both files in one commit — the charter without the
 reason is a row nobody can defend, the reason without the row is a note about
 nothing:
 
@@ -141,8 +171,7 @@ nothing:
 docs(constitution): a row admitted among the additions
 ```
 
-**The hand that appends is yours: paste both blocks, run the guardians, commit
-them together.**
+**The hand that appends is yours: run the command, answer yes, commit.**
 
 ## Rules
 

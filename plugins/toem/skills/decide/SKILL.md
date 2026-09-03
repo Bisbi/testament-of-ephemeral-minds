@@ -1,6 +1,6 @@
 ---
 name: decide
-description: Use when the human wants to record a decision — prepares a row for CONSTITUTION.md § Decisions or PENDING.md in the exact grammar the guardians check, and stops. Never commits, never appends by itself.
+description: Use when the human wants to record a decision — prepares a row for CONSTITUTION.md § Decisions or PENDING.md in the exact grammar the guardians check, then prints the `toem decide` or `toem pending` command that would append it. Never commits, never appends by itself.
 ---
 
 # Prepare a decision row
@@ -11,7 +11,9 @@ are never rewritten — one is added below, dated, pointing at something that
 already exists.
 
 This skill prepares the text and stops. It does not open the charter, does not
-append, does not commit. Everything below is printed for the human to paste.
+append, does not commit. Everything below is printed to be read first, and then
+handed to the one thing that does append: `toem decide`, which is the human's
+command, not this skill's. It writes only when they run it and answer yes.
 
 ## 1. Ask the four fields
 
@@ -74,9 +76,19 @@ It goes **below** the rows already there, inside `CONSTITUTION.md` between
 `<!-- toem:decisions:begin -->` and `<!-- toem:decisions:end -->`. Nothing above
 it is edited.
 
-Say also that the same reason belongs in `CORRESPONDENCE.md`, under **Admitted
-rows**: the charter holds what was decided, that file holds why, and the two are
-kept apart so neither gets edited to tidy up the other.
+Print the entry that goes with it, too — the same reason, under **Admitted
+rows** in `CORRESPONDENCE.md`. The charter holds what was decided, that file
+holds why, and the two are kept apart so neither gets edited to tidy up the
+other:
+
+```
+**<the decision, in one sentence>**
+Decided by <name>, <YYYY-MM-DD>.
+Reason: <the reason, ≥ 40 normalized characters>
+```
+
+The command in section 6 writes both, in one run, so the row and its reason
+cannot arrive separately.
 
 ## 5. A decision that waits is a different row
 
@@ -98,17 +110,47 @@ and writing it here is how a register stops being able to fail.
 adds the row to the charter removes it from the register. Not the next commit,
 not later that day. A register that still lists a decision already taken is a
 lie the guardian cannot catch, because both files are individually well-formed.
+`--from-pending A-NN` is that rule made mechanical: one run writes the charter
+row and takes the register row out, so the two cannot drift apart between one
+commit and the next.
 
-## 6. Print the guardian command, then stop
+## 6. Print the command, then stop
 
-Give the human this, to run after they have pasted:
+The last thing you print is the command, filled in from what the human said, to
+be run from the root of the repository. For a decision taken:
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/guardians/run.sh" .
+bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" decide \
+  --decision "<the decision, in one sentence>" \
+  --review-by <YYYY-MM-DD> \
+  --conditions "<what would make this decision wrong>" \
+  --requirements "<what has to be built for it to hold>" \
+  --pointer "<file path or commit hash>" \
+  --by "<name>" \
+  --reason "<the reason>"
 ```
 
-Expect `constitution: ok` and `pending: ok`. If a line fails, it names what it
-found: a pointer that does not resolve, a reason under 40 normalized
-characters, an empty conditions field, a missing line of the row.
+Add `--from-pending A-NN` when this settles a row of the register: the row
+leaves `PENDING.md` in the same run, which is the simultaneity rule of section 5
+enforced instead of remembered. For a decision that waits, the register row has
+its own command:
 
-**The hand that appends is yours: paste, run the guardian, commit.**
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" pending \
+  --what "<the question, phrased so that an answer closes it>" \
+  --by "<name>" \
+  --closes "<what has to exist or be said for this row to leave>"
+```
+
+Say what it does: it prints the same blocks, asks before writing, writes only on
+a yes, runs the guardians over what it wrote, and prints the commit command
+without running it. `--dry-run` shows everything and writes nothing; `--yes`
+skips the question and is for scripts, not for a first time.
+
+It refuses, before writing a byte, what the guardians would refuse afterwards: a
+pointer that resolves to nothing that already exists, a reason under 40
+characters once whitespace is collapsed, an empty conditions field, a register
+row `--from-pending` cannot find. If the guardians come back red afterwards it
+says so and names the way back, `git checkout --` on the files it wrote.
+
+**The hand that appends is yours: run the command, answer yes, commit.**
