@@ -27,7 +27,7 @@ Nothing outside those seven paths is touched, no existing file is overwritten,
 and no commit is made. `git commit` is the human's hand, and the plugin stops
 before it every time.
 
-## The three skills
+## The four skills
 
 - **`/toem:adopt`** — offers the practice to a repository. Lists what it will
   create, waits for a yes, copies without overwriting, runs the guardians, and
@@ -40,6 +40,12 @@ before it every time.
   check: four fields, a pointer to something that already exists, a reason of at
   least 40 characters once whitespace is collapsed. It prints the row and stops.
   You paste it, you run the guardian, you commit.
+- **`/toem:admit`** — the other direction of the correspondence. A mind replied
+  to the epilogue in its testament; this prepares the row that admits one
+  sentence of that reply into the charter's additions, dated and citing the
+  file, plus the entry that keeps the reason. It can also propose candidates,
+  and it says how much of the corpus it will read before it reads it. It prints
+  the two blocks and stops.
 
 ## What the hooks do, and never do
 

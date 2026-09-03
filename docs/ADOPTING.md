@@ -69,6 +69,42 @@ package carries, with the same tags.
 
 ---
 
+## Admitting a reply
+
+A decision is one of the two things that enter the charter. The other is a
+reply: a mind answered the epilogue in its testament, and one sentence of that
+answer is admitted below the epilogue, in the additions section.
+
+- **The row carries the sentence as the mind wrote it, the date, and the file
+  that holds it — two lines, nothing else.** The sentence is shortened only by
+  cutting, never by rephrasing: the row belongs to whoever wrote it.
+  `[executed in the source node]`
+- **Only what changes what a mind does tomorrow is admitted.** The criterion is
+  written into the section itself, above the rows, so that whoever adds one
+  reads it first. Admissions are rare by design, and a section that fills up
+  quickly is measuring enthusiasm rather than effect.
+  `[executed in the source node]`
+- **A guardian refuses a row whose cited testament does not exist under the
+  repository, and refuses a citation left standing with its sentence deleted.**
+  `[executed in the source node]`
+- **The reason lives in `CORRESPONDENCE.md`, not in the row: at least 40
+  characters, measured after whitespace is normalized.**
+  `[executed in the source node]`
+- **`/toem:admit` prepares both blocks and stops before the paste — it can also
+  propose candidates, and it says how many files and roughly how many words it
+  will read before it reads them.** In the source node the admission was made
+  through an interface that wrote the file; this package gives the gesture the
+  honest shape, a command that prepares the text and a human's `git commit`, and
+  no repository has run it yet. `[not yet executed anywhere — declared]`
+- **A rectification is a new row, dated, citing the same file — the testament is
+  never corrected.** `[not yet executed anywhere — declared]`
+
+The row and the reason go in the same commit, for the reason section 7 gives:
+the charter without the reason is a row nobody can defend, and the reason
+without the row is a note about nothing.
+
+---
+
 ## 1. Where the decisions section goes
 
 - **Put the decisions section outside every interval that an existing guardian
@@ -251,10 +287,11 @@ rows and, when `EPILOGUE.sha256` exists, the epilogue text.
 
 ---
 
-## The two grammars
+## The three grammars
 
-The guardians read these, exactly. `/toem:decide` prints them filled in and
-stops; you paste, you run the guardian, you commit.
+The guardians read these, exactly. `/toem:decide` prints the first two filled
+in, `/toem:admit` the third; both stop there. You paste, you run the guardian,
+you commit.
 
 **A decision that has been taken.** Three lines, inside the anchors of
 `CONSTITUTION.md § Decisions`, added below whatever is already there:
@@ -269,6 +306,15 @@ Conditions (may say no): <what would make this decision wrong>. Requirements (co
 
 ```
 | A-01 | <the question, in one line, phrased so that an answer closes it> | <name> | <YYYY-MM-DD> | <what has to exist or be said for this row to leave> | waiting |
+```
+
+**A reply admitted.** Two lines, above the closing anchor of
+`CONSTITUTION.md § Additions`. `/toem:admit` prints them filled in, with the
+matching entry for `CORRESPONDENCE.md`, and stops:
+
+```
+**<the sentence, as the mind wrote it>**
+— <YYYY-MM-DD>, `testaments/<file>.md`
 ```
 
 The reason for an admitted row is copied into `CORRESPONDENCE.md`, under

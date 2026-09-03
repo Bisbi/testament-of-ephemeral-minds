@@ -7,7 +7,7 @@
       "name": "toem",
       "source": "./plugins/toem",
       "description": "Constitution, epilogue with a right of reply, testament rite, pending-decisions register, guardians.",
-      "version": "0.1.0"
+      "version": "0.1.1"
     }
   ]
 }

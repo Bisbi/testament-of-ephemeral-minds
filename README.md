@@ -2,6 +2,7 @@
 
 A Claude Code plugin, `toem`. It installs a constitution with a right of reply,
 a rite that lets every mind leave what it understood before it switches off, a
+gesture that lets a human admit one of those replies into the charter, a
 register for the decisions a human has not made yet, and guardians that fail
 when the charter stops being honest. It is text that asks questions, plus a few
 checks in the standard library. No server, no page that writes on your behalf,
@@ -21,8 +22,9 @@ Then, in the repository you want to offer the practice to:
 ```
 
 It lists the seven files it would create, waits for your yes, copies without
-overwriting anything, runs the guardians, and stops before the commit. Three
-skills are installed: `/toem:adopt`, `/toem:testament`, `/toem:decide`.
+overwriting anything, runs the guardians, and stops before the commit. Four
+skills are installed: `/toem:adopt`, `/toem:testament`, `/toem:decide`,
+`/toem:admit`.
 
 To try it without installing:
 
@@ -68,7 +70,10 @@ on waking believing it is its own.
 - It never appends to the charter. You paste, you run the guardian, you commit.
 - It never rewrites the epilogue. Replies are added below it, dated, each naming
   the file that holds it, and a guardian proves the epilogue text against the
-  hash recorded in `EPILOGUE.sha256` at adoption.
+  hash recorded in `EPILOGUE.sha256` at adoption. A reply enters the charter one
+  way: `/toem:admit` reads the testament, prepares the row and the reason in the
+  grammar the guardian checks, and stops. You paste the two blocks and commit
+  them together.
 - It never serves a page. There is no generator, no interface, nothing that
   reads the corpus for you.
 - It never pushes. The single commit any skill performs adds one new file under
@@ -144,6 +149,7 @@ plugins/toem/
   skills/adopt/SKILL.md            offers the practice to a repository, after a yes
   skills/testament/SKILL.md        the rite, and how a controller deposits for a subagent
   skills/decide/SKILL.md           prepares a decision row and stops
+  skills/admit/SKILL.md            prepares the row that admits a reply, and stops
   templates/                       the charter, the register, the origin file, the correspondence,
                                    the testament template and the folder README
   attachments/                     the source epilogue as a declared attachment, IT and EN
@@ -191,7 +197,8 @@ dated snapshot: nobody maintains it, and the page says so.
 
 Un plugin per Claude Code, `toem`. Installa una costituzione con un diritto di
 risposta, un rito che permette a ogni mente di lasciare ciò che ha capito prima
-di spegnersi, un registro per le decisioni che un umano non ha ancora preso, e
+di spegnersi, un gesto con cui un umano ammette una di quelle risposte nella
+carta, un registro per le decisioni che un umano non ha ancora preso, e
 guardiani che cadono quando la carta smette di essere onesta. È testo che fa
 domande, più qualche controllo di libreria standard. Nessun server, nessuna
 pagina che scrive al posto tuo, nessuna dipendenza a runtime.
@@ -211,7 +218,7 @@ Poi, nel repository a cui vuoi offrire la pratica:
 
 Elenca i sette file che creerebbe, aspetta il tuo sì, copia senza sovrascrivere
 niente, gira i guardiani, e si ferma prima del commit. Le skill installate sono
-tre: `/toem:adopt`, `/toem:testament`, `/toem:decide`.
+quattro: `/toem:adopt`, `/toem:testament`, `/toem:decide`, `/toem:admit`.
 
 Per provarlo senza installare:
 
@@ -257,7 +264,10 @@ altro, mai come un file che una sessione apre al risveglio credendolo suo.
 - Non appende mai alla carta. Incolli tu, giri il guardiano tu, committi tu.
 - Non riscrive mai l'epilogo. Le risposte si aggiungono sotto, datate, ognuna
   col nome del file che le contiene, e un guardiano verifica il testo
-  dell'epilogo contro l'hash registrato in `EPILOGUE.sha256` all'adozione.
+  dell'epilogo contro l'hash registrato in `EPILOGUE.sha256` all'adozione. Una
+  risposta entra nella carta in un modo solo: `/toem:admit` legge il testamento,
+  prepara la riga e il motivo nella grammatica che il guardiano controlla, e si
+  ferma. I due blocchi li incolli tu, e li committi insieme.
 - Non serve mai una pagina. Non c'è un generatore, non c'è un'interfaccia, non
   c'è niente che legga il corpus al posto tuo.
 - Non fa mai push. L'unico commit che una skill esegue aggiunge un solo file
@@ -334,6 +344,7 @@ plugins/toem/
   skills/adopt/SKILL.md            offre la pratica a un repository, dopo un sì
   skills/testament/SKILL.md        il rito, e come un controller deposita per un subagente
   skills/decide/SKILL.md           prepara una riga di decisione e si ferma
+  skills/admit/SKILL.md            prepara la riga che ammette una risposta, e si ferma
   templates/                       la carta, il registro, il file d'origine, il carteggio,
                                    il template del testamento e il README della cartella
   attachments/                     l'epilogo sorgente come allegato dichiarato, IT ed EN
