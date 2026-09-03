@@ -70,6 +70,11 @@
     var cards = deck.querySelectorAll(".deck-card");
     var current = -1;
 
+    // The track is one screen plus a stretch of scroll per card. The count is
+    // taken from the cards themselves, so adding a step cannot leave the track's
+    // length and the card the scroll chooses disagreeing with each other.
+    track.style.setProperty("--steps", String(cards.length));
+
     function place(index) {
       if (index === current) {
         return;
@@ -103,9 +108,25 @@
       place(Math.min(cards.length - 1, Math.floor(done * cards.length)));
     }
 
+    // Tabbing to a card brings it to the front and moves the page to the scroll
+    // position that keeps it there. Without the second half, the next pixel of
+    // scroll puts another card in front of the one just focused.
     Array.prototype.forEach.call(cards, function (card, n) {
       card.addEventListener("focus", function () {
         place(n);
+        if (window.innerWidth < WIDE) {
+          return;
+        }
+        // After the frame: the browser scrolls a focused element into view on
+        // its own, and doing this first would only be undone by that.
+        window.requestAnimationFrame(function () {
+          var box = track.getBoundingClientRect();
+          var travel = box.height - window.innerHeight;
+          if (travel > 0) {
+            var top = box.top + window.scrollY + ((n + 0.5) / cards.length) * travel;
+            window.scrollTo(0, Math.round(top));
+          }
+        });
       });
     });
 

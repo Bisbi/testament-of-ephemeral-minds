@@ -21,9 +21,7 @@
   --accent: #57b7f0;
   --accent-fill: #17293a;
   --ok: #48c08a;
-  --warn: #e3a63f;
   --decor: #141e2b;
-  --shadow-2: 0 10px 28px -10px rgba(0, 0, 0, 0.65);
   color-scheme: dark;
 
   --font-sans: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
@@ -46,9 +44,7 @@
   --accent: #0b6fb8;
   --accent-fill: #ddebf8;
   --ok: #127a50;
-  --warn: #8a5b08;
   --decor: #dfe7f1;
-  --shadow-2: 0 10px 28px -12px rgba(16, 26, 38, 0.22);
   color-scheme: light;
 }
 
@@ -64,9 +60,7 @@
     --accent: #0b6fb8;
     --accent-fill: #ddebf8;
     --ok: #127a50;
-    --warn: #8a5b08;
     --decor: #dfe7f1;
-    --shadow-2: 0 10px 28px -12px rgba(16, 26, 38, 0.22);
     color-scheme: light;
   }
 }
@@ -584,11 +578,20 @@ tr:last-child td {
   font-size: 20px;
 }
 
+/* The card is capped at the measure instead of the text being capped inside a
+   wider card, so a card is filled by its own words rather than half empty. */
 .deck-card p,
 .deck-card li {
   font-size: 15px;
   line-height: 1.55;
   max-width: 62ch;
+}
+
+@media (min-width: 940px) {
+  .deck-card p,
+  .deck-card li {
+    max-width: none;
+  }
 }
 
 .deck-card .where {
@@ -600,11 +603,14 @@ tr:last-child td {
    where motion is unwelcome, the same seven cards are a plain vertical list:
    the stack needs the script to choose a card, and the script does not run. */
 @media (min-width: 940px) and (prefers-reduced-motion: no-preference) {
-  .deck-track {
-    height: calc(100vh + var(--steps) * 62vh);
+  /* `--steps` is written by booklet.js from the number of cards it found, so the
+     track's length and the card the scroll chooses cannot drift apart when a
+     step is added. The fallback covers the moment before the script runs. */
+  .booklet-motion .deck-track {
+    height: calc(100vh + var(--steps, 7) * 62vh);
   }
 
-  .deck-stage {
+  .booklet-motion .deck-stage {
     position: sticky;
     top: var(--strip);
     height: calc(100vh - var(--strip));
@@ -613,36 +619,50 @@ tr:last-child td {
     perspective: 1200px;
   }
 
-  .deck-cards {
+  .booklet-motion .deck-cards {
     display: grid;
     transform-style: preserve-3d;
   }
 
   /* The cards behind recede and rise, so the stack is visible above the one in
-     front and the reader can see how many are still to come. */
-  .deck-card {
+     front and the reader can see how many are still to come.
+
+     The rise has to out-run the perspective divide. A card pushed 100 px back
+     under a 1200 px perspective is drawn at about 0.92 of its size, and being
+     smaller its top edge also falls towards the middle, so a nominal offset
+     arrives on screen worth roughly two thirds of itself. The value below is
+     set for that, and the peek it produces was measured in the browser. */
+  /* `align-self: start` keeps a short card short. The cards share one grid cell,
+     so without it every card would be stretched to the height of the longest and
+     a three-line step would sit in a half-empty panel. Their tops align, which
+     is also what makes the stack behind read as a stack. */
+  .booklet-motion .deck-card {
     grid-area: 1 / 1;
+    justify-self: center;
+    align-self: start;
+    width: 100%;
+    max-width: 620px;
     margin-bottom: 0;
-    min-height: 52vh;
+    min-height: 300px;
     transition: transform 400ms var(--ease), opacity 400ms var(--ease);
-    transform: translateZ(calc(var(--d, 0) * -90px)) translateY(calc(var(--d, 0) * -26px));
+    transform: translateZ(calc(var(--d, 0) * -100px)) translateY(calc(var(--d, 0) * -84px));
   }
 
-  .deck-card[data-state="now"] {
+  .booklet-motion .deck-card[data-state="now"] {
     opacity: 1;
   }
 
-  .deck-card[data-state="next"] {
-    opacity: 0.28;
+  .booklet-motion .deck-card[data-state="next"] {
+    opacity: 0.45;
   }
 
-  .deck-card[data-state="past"] {
+  .booklet-motion .deck-card[data-state="past"] {
     opacity: 0;
-    transform: translateY(56px) translateZ(-40px);
+    transform: translateY(64px) translateZ(-40px);
     pointer-events: none;
   }
 
-  .deck-card[data-state="far"] {
+  .booklet-motion .deck-card[data-state="far"] {
     opacity: 0;
     pointer-events: none;
   }
@@ -1179,6 +1199,16 @@ main.thesis .prose > h1 {
 
   .commands {
     font-size: 13px;
+  }
+}
+
+/* Printing, and saving to PDF, happen on a page nobody has scrolled: the leaves
+   below the fold never met the observer that reveals them, so without this rule
+   seven of the nine come out blank. */
+@media print {
+  .booklet-motion .leaf {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

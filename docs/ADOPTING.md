@@ -338,13 +338,13 @@ prepares and prints; the runner writes, and only when a human runs it and
 answers yes.
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit \
+bash "<plugin-root>/bin/toem" admit \
   --file "testaments/<file>.md" \
   --sentence "<the sentence, as the mind wrote it>" \
   --by "<name>" \
   --reason "<at least 40 characters once whitespace is collapsed>"
 
-bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" decide \
+bash "<plugin-root>/bin/toem" decide \
   --decision "<the decision, in one sentence>" \
   --review-by <YYYY-MM-DD> \
   --conditions "<what would make this decision wrong>" \
@@ -354,11 +354,17 @@ bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" decide \
   --reason "<the reason>" \
   --from-pending A-01
 
-bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" pending \
+bash "<plugin-root>/bin/toem" pending \
   --what "<the question, phrased so that an answer closes it>" \
   --by "<name>" \
   --closes "<what has to exist or be said for this row to leave>"
 ```
+
+`<plugin-root>` is the directory Claude Code installed the plugin into, normally
+`~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem`.
+`/toem:admit` and `/toem:decide` print the command with the real path already
+filled in; `CLAUDE_PLUGIN_ROOT` exists only inside Claude Code and is not set in
+your shell.
 
 Run from the root of the adopting repository. Python 3, standard library only;
 `bin/toem` is a POSIX `sh` wrapper that uses `python3` or `python`, whichever is
@@ -407,8 +413,12 @@ it writes; this is for everything else, and for a repository whose checks should
 run it on their own:
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/guardians/run.sh" .
+bash "<plugin-root>/guardians/run.sh" .
 ```
+
+The same `<plugin-root>` as above: the directory Claude Code installed the plugin
+into, normally
+`~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem`.
 
 Two lines are expected:
 

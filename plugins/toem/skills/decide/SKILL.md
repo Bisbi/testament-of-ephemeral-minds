@@ -119,8 +119,16 @@ commit and the next.
 The last thing you print is the command, filled in from what the human said, to
 be run from the root of the repository. For a decision taken:
 
+**Print the path, not the variable.** `CLAUDE_PLUGIN_ROOT` is set for you and is
+not set in the human's shell. A command that still carries it fails in their
+terminal with an error naming a path they never typed, and these blocks are the
+ones they are meant to paste. Substitute the value — the absolute path you can
+read right now — for `<plugin-root>` in both blocks below before you print them.
+If you cannot resolve it, say so and print the installed location instead of the
+variable: `~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem`.
+
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" decide \
+bash "<plugin-root>/bin/toem" decide \
   --decision "<the decision, in one sentence>" \
   --review-by <YYYY-MM-DD> \
   --conditions "<what would make this decision wrong>" \
@@ -136,7 +144,7 @@ enforced instead of remembered. For a decision that waits, the register row has
 its own command:
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" pending \
+bash "<plugin-root>/bin/toem" pending \
   --what "<the question, phrased so that an answer closes it>" \
   --by "<name>" \
   --closes "<what has to exist or be said for this row to leave>"

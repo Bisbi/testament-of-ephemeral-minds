@@ -54,9 +54,15 @@ The skills prepare and print; nothing in them writes into the charter. What
 writes is one command, and it belongs to the human:
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit --file testaments/<file>.md \
+bash "<plugin-root>/bin/toem" admit --file testaments/<file>.md \
   --sentence "<the sentence>" --by "<name>" --reason "<why>"
 ```
+
+`<plugin-root>` is the directory Claude Code installed the plugin into, normally
+`~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem`.
+`/toem:admit` and `/toem:decide` print the command with the real path already
+filled in; `CLAUDE_PLUGIN_ROOT` exists only inside Claude Code and is not set in
+your shell.
 
 `toem admit` appends a reply row and its reason. `toem decide` writes a decision
 row and its reason, and with `--from-pending A-NN` removes the register row it
@@ -104,8 +110,12 @@ there is none.
 ## The guardians
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/guardians/run.sh" .
+bash "<plugin-root>/guardians/run.sh" .
 ```
+
+The same `<plugin-root>` as above: the directory Claude Code installed the plugin
+into, normally
+`~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem`.
 
 Python 3, standard library only. `check_constitution.py` fails when a guarded
 section has lost its closing anchor, when an addition row cites a testament file

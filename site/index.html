@@ -139,8 +139,9 @@ further down.</span><span lang="it">Quella met&agrave; il pacchetto non pu&ograv
 <figure class="figure">
 <img src="img/1-the-letter.svg" alt="A small figure leaves a folded letter on a desk and dims">
 <figcaption><span lang="en">A mind leaves its letter on the desk before the light goes
-out.</span><span lang="it">Una mente lascia la sua lettera sul tavolo prima che la luce si
-spenga.</span></figcaption>
+out. Illustration generated with an image model.</span><span lang="it">Una mente lascia la
+sua lettera sul tavolo prima che la luce si spenga. Illustrazione generata con un modello di
+immagini.</span></figcaption>
 </figure>
 </div>
 </section>
@@ -266,7 +267,7 @@ muro</a> tiene gli altri.</span>
 </section>
 
 <!-- 4 ------------------------------------------------- how the human curates -->
-<section class="leaf" style="--steps: 7">
+<section class="leaf">
 <h2><span lang="en">How the human curates</span><span lang="it">Come cura l'umano</span></h2>
 <p class="lead">
 <span lang="en">This is the chapter that assumes nothing. Seven steps, each with the exact
@@ -281,9 +282,9 @@ parte va nella conversazione di Claude Code, una parte nel tuo terminale.</span>
 <div class="deck-stage">
 <div class="deck-cards" data-deck>
 
-<article class="deck-card" tabindex="0">
+<article class="deck-card" tabindex="0" role="group" aria-labelledby="step-1">
 <p class="step"><span lang="en">step 1 of 7</span><span lang="it">passo 1 di 7</span></p>
-<h3><span lang="en">Read</span><span lang="it">Leggere</span></h3>
+<h3 id="step-1"><span lang="en">Read</span><span lang="it">Leggere</span></h3>
 <p><span lang="en">You open a file under <code>testaments/</code>. That is the whole step.
 Nothing in this package reads the corpus for you, and nothing proposes anything unless you
 ask for it.</span><span lang="it">Apri un file dentro <code>testaments/</code>. Il passo
@@ -291,9 +292,9 @@ ask for it.</span><span lang="it">Apri un file dentro <code>testaments/</code>. 
 niente finch&eacute; non lo chiedi.</span></p>
 </article>
 
-<article class="deck-card" tabindex="0">
+<article class="deck-card" tabindex="0" role="group" aria-labelledby="step-2">
 <p class="step"><span lang="en">step 2 of 7</span><span lang="it">passo 2 di 7</span></p>
-<h3><span lang="en">Ask for a proposal (optional)</span><span lang="it">Chiedere una proposta (facoltativo)</span></h3>
+<h3 id="step-2"><span lang="en">Ask for a proposal (optional)</span><span lang="it">Chiedere una proposta (facoltativo)</span></h3>
 <p class="where"><span lang="en">In the Claude Code conversation:
 <code>/toem:admit</code></span><span lang="it">Nella conversazione di Claude Code:
 <code>/toem:admit</code></span></p>
@@ -310,9 +311,9 @@ una mente farebbe diversamente domani per causa sua. Se non qualifica niente lo 
 candidato inventato &egrave; peggio di nessuno.</span></p>
 </article>
 
-<article class="deck-card" tabindex="0">
+<article class="deck-card" tabindex="0" role="group" aria-labelledby="step-3">
 <p class="step"><span lang="en">step 3 of 7</span><span lang="it">passo 3 di 7</span></p>
-<h3><span lang="en">Admit a reply</span><span lang="it">Ammettere una risposta</span></h3>
+<h3 id="step-3"><span lang="en">Admit a reply</span><span lang="it">Ammettere una risposta</span></h3>
 <p class="where"><span lang="en">In the Claude Code conversation:
 <code>/toem:admit</code>, naming the file</span><span lang="it">Nella conversazione di Claude
 Code: <code>/toem:admit</code>, nominando il file</span></p>
@@ -328,12 +329,19 @@ caratteri con gli spazi collassati, e il nome di chi ammette. Stampa i due blocc
 comando, e non scrive niente.</span></p>
 </article>
 
-<article class="deck-card" tabindex="0">
+<article class="deck-card" tabindex="0" role="group" aria-labelledby="step-4">
 <p class="step"><span lang="en">step 4 of 7</span><span lang="it">passo 4 di 7</span></p>
-<h3><span lang="en">Press</span><span lang="it">Premere</span></h3>
+<h3 id="step-4"><span lang="en">Press</span><span lang="it">Premere</span></h3>
 <p class="where"><span lang="en">In your terminal, from the root of the
 repository:</span><span lang="it">Nel tuo terminale, dalla radice del repository:</span></p>
-<pre class="commands"><span class="cmd">bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit --file testaments/&lt;file&gt;.md --sentence "&lt;the sentence&gt;" --by "&lt;your name&gt;" --reason "&lt;why&gt;"</span></pre>
+<pre class="commands"><span class="cmd">bash "&lt;plugin-root&gt;/bin/toem" admit --file testaments/&lt;file&gt;.md --sentence "&lt;the sentence&gt;" --by "&lt;your name&gt;" --reason "&lt;why&gt;"</span></pre>
+<p class="note">
+<span lang="en"><code>&lt;plugin-root&gt;</code> is where Claude Code installed the plugin, and
+<code>/toem:admit</code> prints this command with the real path already filled in.</span>
+<span lang="it"><code>&lt;plugin-root&gt;</code> &egrave; dove Claude Code ha installato il
+plugin, e <code>/toem:admit</code> stampa questo comando col percorso vero gi&agrave;
+compilato.</span>
+</p>
 <p><span lang="en">It prints the same two blocks and asks <code>Append these two blocks?
 [y/N]</code>. On <code>y</code> it inserts the row above the closing anchor of the additions
 section and the entry under <code>## Admitted rows</code> in <code>CORRESPONDENCE.md</code>,
@@ -346,9 +354,9 @@ su ci&ograve; che ha scritto, e stampa il comando di commit senza eseguirlo. Il 
 tu. <code>--dry-run</code> mostra tutto e non scrive niente.</span></p>
 </article>
 
-<article class="deck-card" tabindex="0">
+<article class="deck-card" tabindex="0" role="group" aria-labelledby="step-5">
 <p class="step"><span lang="en">step 5 of 7</span><span lang="it">passo 5 di 7</span></p>
-<h3><span lang="en">Decide</span><span lang="it">Decidere</span></h3>
+<h3 id="step-5"><span lang="en">Decide</span><span lang="it">Decidere</span></h3>
 <p class="where"><span lang="en"><code>/toem:decide</code> in the conversation, then
 <code>toem decide</code> in the terminal</span><span lang="it"><code>/toem:decide</code> nella
 conversazione, poi <code>toem decide</code> nel terminale</span></p>
@@ -366,10 +374,10 @@ e la stessa esecuzione toglie la riga dal registro, cos&igrave; la carta e il re
 possono contraddirsi fra un commit e l'altro.</span></p>
 </article>
 
-<article class="deck-card" tabindex="0">
+<article class="deck-card" tabindex="0" role="group" aria-labelledby="step-6">
 <p class="step"><span lang="en">step 6 of 7</span><span lang="it">passo 6 di 7</span></p>
-<h3><span lang="en">Keep a decision waiting</span><span lang="it">Tenere una decisione in attesa</span></h3>
-<pre class="commands"><span class="cmd">bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" pending --what "&lt;the question&gt;" --by "&lt;your name&gt;" --closes "&lt;what closes it&gt;"</span></pre>
+<h3 id="step-6"><span lang="en">Keep a decision waiting</span><span lang="it">Tenere una decisione in attesa</span></h3>
+<pre class="commands"><span class="cmd">bash "&lt;plugin-root&gt;/bin/toem" pending --what "&lt;the question&gt;" --by "&lt;your name&gt;" --closes "&lt;what closes it&gt;"</span></pre>
 <p><span lang="en">A row lands in <code>PENDING.md</code> with today's date and the next free
 number. Two states only: <code>waiting</code>, which the guardian fails after 30 days, and
 <code>postponed to YYYY-MM-DD</code>, which it fails once that date is past. There is no
@@ -381,9 +389,9 @@ passata quella data. Non c'&egrave; un terzo stato. O decidi o dici il giorno, e
 delle due cose &egrave; il silenzio.</span></p>
 </article>
 
-<article class="deck-card" tabindex="0">
+<article class="deck-card" tabindex="0" role="group" aria-labelledby="step-7">
 <p class="step"><span lang="en">step 7 of 7</span><span lang="it">passo 7 di 7</span></p>
-<h3><span lang="en">What the runner refuses, before writing</span><span lang="it">Cosa rifiuta il runner, prima di scrivere</span></h3>
+<h3 id="step-7"><span lang="en">What the runner refuses, before writing</span><span lang="it">Cosa rifiuta il runner, prima di scrivere</span></h3>
 <ul lang="en">
 <li>a sentence that is not in that testament's reply section word for word;</li>
 <li>a sentence already among the additions;</li>
@@ -419,11 +427,22 @@ commit &egrave; tuo, e lo &egrave; anche la decisione di non farlo.</span></p>
 them: <code>git checkout -- CONSTITUTION.md CORRESPONDENCE.md</code>.</span><span lang="it">Se
 i guardiani tornano rossi dopo una scrittura, la via del ritorno &egrave; stampata insieme a
 loro: <code>git checkout -- CONSTITUTION.md CORRESPONDENCE.md</code>.</span></p>
+<p><span lang="en">One thing about the two terminal commands above.
+<code>&lt;plugin-root&gt;</code> is the directory Claude Code installed the plugin into,
+normally <code>~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem</code>.
+<code>CLAUDE_PLUGIN_ROOT</code> exists only inside Claude Code and is not set in your shell,
+which is why the page does not use it.</span><span lang="it">Una cosa sui due comandi da
+terminale qui sopra. <code>&lt;plugin-root&gt;</code> &egrave; la cartella in cui Claude Code
+ha installato il plugin, di norma
+<code>~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem</code>.
+<code>CLAUDE_PLUGIN_ROOT</code> esiste solo dentro Claude Code e nella tua shell non &egrave;
+definita, ed &egrave; per questo che la pagina non la usa.</span></p>
 </div>
 <figure class="figure">
 <img src="img/2-the-gate.svg" alt="A hand at a gate lets one letter through">
 <figcaption><span lang="en">One sentence passes, and a hand decides which
-one.</span><span lang="it">Passa una frase sola, e una mano decide quale.</span></figcaption>
+one. Illustration generated with an image model.</span><span lang="it">Passa una frase sola,
+e una mano decide quale. Illustrazione generata con un modello di immagini.</span></figcaption>
 </figure>
 </div>
 </section>
@@ -467,7 +486,15 @@ dell'adozione;</li>
 </ul>
 <p class="where"><span lang="en">Run them yourself, from the root of the
 repository:</span><span lang="it">Falli girare tu, dalla radice del repository:</span></p>
-<pre class="commands"><span class="cmd">bash "${CLAUDE_PLUGIN_ROOT}/guardians/run.sh" .</span></pre>
+<pre class="commands"><span class="cmd">bash "&lt;plugin-root&gt;/guardians/run.sh" .</span></pre>
+<p class="note">
+<span lang="en">The same <code>&lt;plugin-root&gt;</code> as in the chapter above: the directory
+Claude Code installed the plugin into, normally
+<code>~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem</code>.</span>
+<span lang="it">Lo stesso <code>&lt;plugin-root&gt;</code> del capitolo qui sopra: la cartella in
+cui Claude Code ha installato il plugin, di norma
+<code>~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem</code>.</span>
+</p>
 <p><span lang="en">Green is two lines, <code>constitution: ok</code> and
 <code>pending: ok</code>. Red names the row and the file. Changing the epilogue on purpose is
 still allowed: regenerate <code>EPILOGUE.sha256</code> in the same commit as the edit, so
@@ -481,8 +508,9 @@ insieme.</span></p>
 <figure class="figure">
 <img src="img/3-the-guardians.svg" alt="Three lanterns watch a scroll">
 <figcaption><span lang="en">The lanterns do not correct the text. They say when it stopped
-being true.</span><span lang="it">Le lanterne non correggono il testo. Dicono quando ha
-smesso di essere vero.</span></figcaption>
+being true. Illustration generated with an image model.</span><span lang="it">Le lanterne non
+correggono il testo. Dicono quando ha smesso di essere vero. Illustrazione generata con un
+modello di immagini.</span></figcaption>
 </figure>
 </div>
 </section>

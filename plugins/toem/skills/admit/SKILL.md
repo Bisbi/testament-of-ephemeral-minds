@@ -137,12 +137,21 @@ the repository. Every argument comes from what the human already said — nothin
 here is yours to invent:
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit \
+bash "<plugin-root>/bin/toem" admit \
   --file "testaments/<file>.md" \
   --sentence "<the sentence, as the mind wrote it>" \
   --by "<name>" \
   --reason "<the reason>"
 ```
+
+**Print the path, not the variable.** `CLAUDE_PLUGIN_ROOT` is set for you and is
+not set in the human's shell. A command that still carries it fails in their
+terminal with an error naming a path they never typed, and the block above is
+the one thing they are meant to paste. Substitute the value — the absolute path
+you can read right now — for `<plugin-root>` before you print, so what appears
+on screen is what works. If you cannot resolve it, say so and print the
+installed location instead of the variable:
+`~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem`.
 
 Say what it does, because a command nobody understands gets run or refused for
 the wrong reasons: it prints the same two blocks, asks `Append these two blocks?

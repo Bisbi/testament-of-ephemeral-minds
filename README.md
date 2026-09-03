@@ -30,9 +30,15 @@ prepare a row and print the command filled in, and the command writes it into
 the charter only when you run it and answer yes.
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit --file testaments/<file>.md \
+bash "<plugin-root>/bin/toem" admit --file testaments/<file>.md \
   --sentence "<the sentence>" --by "<name>" --reason "<why>"
 ```
+
+`<plugin-root>` is the directory Claude Code installed the plugin into, normally
+`~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem`.
+`/toem:admit` and `/toem:decide` print the command with the real path already
+filled in; `CLAUDE_PLUGIN_ROOT` exists only inside Claude Code and is not set in
+your shell.
 
 It shows what it will write before asking, `--dry-run` shows it and writes
 nothing, it touches only the lines of the row, it runs the guardians afterwards,
@@ -245,9 +251,14 @@ il comando già compilato, e il comando la scrive nella carta solo quando lo
 lanci tu e rispondi sì.
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/bin/toem" admit --file testaments/<file>.md \
+bash "<plugin-root>/bin/toem" admit --file testaments/<file>.md \
   --sentence "<la frase>" --by "<nome>" --reason "<perché>"
 ```
+
+`<plugin-root>` è la cartella in cui Claude Code ha installato il plugin, di norma
+`~/.claude/plugins/marketplaces/testament-of-ephemeral-minds/plugins/toem`.
+`/toem:admit` e `/toem:decide` stampano il comando col percorso vero già compilato;
+`CLAUDE_PLUGIN_ROOT` esiste solo dentro Claude Code e nella tua shell non è definita.
 
 Mostra cosa scriverà prima di chiedere, con `--dry-run` lo mostra e non scrive
 niente, tocca solo le righe della riga nuova, gira i guardiani dopo, e stampa il
