@@ -1,5 +1,7 @@
 # testament-of-ephemeral-minds
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22303062.svg)](https://doi.org/10.5281/zenodo.22303062)
+
 A Claude Code plugin, `toem`. It installs a constitution with a right of reply,
 a rite that lets every mind leave what it understood before it switches off, a
 gesture that lets a human admit one of those replies into the charter, a
@@ -197,6 +199,10 @@ anywhere else. Its plugin system is for the desktop shell — widgets, panels,
 overlays, services — which is not the shape of a practice made of text, and so
 there is deliberately no Omarchy plugin here. The reasoning is in
 [docs/ON-OMARCHY.md](docs/ON-OMARCHY.md).
+
+## Cite
+
+Bibbò, G. (2026). *testament-of-ephemeral-minds: a constitution with a right of reply for coding agents* (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.22303062 — `CITATION.cff` carries the same record.
 
 ## Licenses
 
@@ -419,6 +425,10 @@ due comandi di ovunque altro. Il suo sistema di plugin è per la shell del
 desktop — widget, pannelli, overlay, servizi — che non è la forma di una pratica
 fatta di testo, e per questo qui un plugin Omarchy non c'è, deliberatamente. Il
 ragionamento sta in [docs/ON-OMARCHY.md](docs/ON-OMARCHY.md).
+
+## Citare
+
+Bibbò, G. (2026). *testament-of-ephemeral-minds: a constitution with a right of reply for coding agents* (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.22303062 — lo stesso record è in `CITATION.cff`.
 
 ## Licenze
 

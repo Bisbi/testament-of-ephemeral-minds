@@ -8,6 +8,14 @@ version: 0.1.0
 date-released: 2026-09-03
 url: "https://bisbi.github.io/testament-of-ephemeral-minds/"
 repository-code: "https://github.com/Bisbi/testament-of-ephemeral-minds"
+doi: 10.5281/zenodo.22303062
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22303062
+    description: "Concept DOI: all versions"
+  - type: doi
+    value: 10.5281/zenodo.22303063
+    description: "Version DOI: v0.1.0"
 license: MIT
 keywords:
   - coding agents
