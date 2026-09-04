@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bisbi.github.io/testament-of-ephemeral-minds/sitemap.xml

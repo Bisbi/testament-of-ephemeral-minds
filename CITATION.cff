@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this practice or cite the thesis, please cite it as below."
+title: "testament-of-ephemeral-minds: a constitution with a right of reply for coding agents"
+authors:
+  - family-names: Bibbo
+    given-names: Giovanni
+version: 0.1.0
+date-released: 2026-09-03
+url: "https://bisbi.github.io/testament-of-ephemeral-minds/"
+repository-code: "https://github.com/Bisbi/testament-of-ephemeral-minds"
+license: MIT
+keywords:
+  - coding agents
+  - constitution
+  - testament
+  - agent memory
+  - human-in-the-loop
+abstract: "Every mind that works in a repository leaves, before switching off, what it understood. A constitution model with a right of reply, a testament rite, a register for human decisions, guardians that keep the charter honest, and a runner that appends only when a human runs it. Measured on two months of real use; the human half is measured, not proven."
