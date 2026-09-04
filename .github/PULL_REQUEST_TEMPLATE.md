@@ -12,4 +12,4 @@ python site/build.py && git status --porcelain site/
 
 **Confidentiality**: this change adds no hostname, internal name, credential, or commit hash from another repository. ☐
 
-**Attribution**: no `Co-Authored-By`, no session link, no "generated with" in commits or files. ☐
+**Attribution**: no co-authorship trailer, no session link, no assistant signature in commits or files. ☐

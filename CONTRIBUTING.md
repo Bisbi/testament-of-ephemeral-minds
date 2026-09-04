@@ -15,7 +15,7 @@ This repository carries a practice, not only code. Two kinds of contribution are
   ```
 
 - English for code, comments, manifests and commit messages (`type(scope): what changed`). The README and the site are bilingual: change both halves.
-- **No synthetic co-authorship.** Commits, pull requests and files carry no `Co-Authored-By` trailer, no session link, no "generated with". The one exception is a testament, where the name attributes the voice, not the work.
+- **No synthetic co-authorship.** Commits, pull requests and files carry no co-authorship trailer, no session link, no "made with an assistant" signature. The one exception is a testament, where the name attributes the voice, not the work.
 - Nothing that identifies a private project may enter: no hostnames, no internal names, no credentials, no commit hashes from repositories that are not this one. If in doubt, leave it out.
 - Guardians are contracts. A change to `guardians/` needs a test that fails before and passes after, and a sentence in the pull request saying which promise of the charter it protects.
 
