@@ -1,0 +1,17 @@
+{
+  "title": "testament-of-ephemeral-minds: a constitution with a right of reply for coding agents",
+  "upload_type": "software",
+  "description": "<p>Every mind that works in a repository leaves, before switching off, what it understood. A Claude Code plugin (<code>toem</code>) with a constitution model that has a right of reply, a testament rite, a register for human decisions, guardians that keep the charter honest, and a runner that appends only when a human runs it. Ships with a bilingual thesis (EN/IT), nineteen cleaned real testaments from two months of use, and a static site.</p><p>Every number the package claims is measured or declared not executed; the half that is a human who reads is measured, not proven.</p><p>Code is MIT; texts (constitution model, epilogue attachment, testaments, thesis, site) are CC BY-SA 4.0.</p>",
+  "creators": [
+    { "name": "Bibbò, Giovanni" }
+  ],
+  "keywords": ["coding agents", "Claude Code", "constitution", "testament", "agent memory", "human-in-the-loop", "AI governance", "software practice"],
+  "license": "MIT",
+  "language": "eng",
+  "version": "0.1.0",
+  "related_identifiers": [
+    { "identifier": "https://bisbi.github.io/testament-of-ephemeral-minds/", "relation": "isDocumentedBy", "resource_type": "publication-other" },
+    { "identifier": "https://github.com/Bisbi/testament-of-ephemeral-minds", "relation": "isSupplementTo", "resource_type": "software" }
+  ],
+  "access_right": "open"
+}
