@@ -16,6 +16,9 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.22303063
     description: "Version DOI: v0.1.0"
+  - type: doi
+    value: 10.5281/zenodo.22640741
+    description: "Version DOI: v0.1.1"
 license: MIT
 keywords:
   - coding agents
