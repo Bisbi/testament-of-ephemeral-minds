@@ -204,6 +204,19 @@ From the corpus, in order of the price paid: **cites**
    synthetic mind presses the buttons that change the charter; the dialogue says
    how many testaments it will read and what it costs, beforehand. In the package
    that gate is `git commit`, and every skill stops one step before it.
+7. **The rite costs less than one per cent, and the return is not measured.**
+   Measured on the source repository on 2026-09-07: 233 testaments, 115,621 words
+   in two months; median 403 words for a subagent's testament, 700 for a session's.
+   At roughly 1.6 tokens per word that is about 185,000 output tokens over two
+   months, plus the same again in the controller's context when it deposits for a
+   subagent, plus about 2,000 input tokens per session to read the epilogue and the
+   last testament on waking. Less than a single long session spends in a day. What
+   it saves is not counted: the lines *«the error I would repeat»* stopped known
+   repetitions (a usage limit that kills subagents silently, a hook event that
+   delivers nothing to the model), and the guardians born from the replies replaced
+   judgement by reading with code. Nobody has a counter for what was not repeated,
+   so the balance is declared: **cost measured, saving not**. The tokens that are
+   certainly spent without return are those of the 148 testaments nobody has read.
 
 On the form of the rows that enter the charter, two rules paid for dearly.
 **Attribution is verifiable, not typographic**: every row cites something that

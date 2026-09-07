@@ -197,6 +197,20 @@ Dal corpus, in ordine di costo pagato: **cita**
    mente sintetica preme i bottoni che cambiano la carta; il dialogo dice quanti
    testamenti leggerà e quanto costa, prima. Nel pacchetto quel cancello è
    `git commit`, e ogni skill si ferma un passo prima.
+7. **Il rito costa meno dell'uno per cento, e il ritorno non è misurato.**
+   Misurato sul repository d'origine il 2026-09-07: 233 testamenti, 115.621 parole
+   in due mesi; mediana 403 parole per il testamento di un subagente, 700 per quello
+   di una sessione. A circa 1,6 token per parola sono ~185.000 token in uscita in
+   due mesi, più altrettanti nel contesto del controller quando deposita per un
+   subagente, più ~2.000 token in ingresso per sessione per leggere l'epilogo e
+   l'ultimo testamento al risveglio. Meno di quanto spende una sola sessione lunga
+   in un giorno. Quello che fa risparmiare non è contato: le righe *«l'errore che
+   rifarei»* hanno fermato ripetizioni note (un limite di utilizzo che uccide i
+   subagenti in silenzio, un evento di hook che al modello non consegna nulla), e i
+   guardiani nati dalle risposte hanno sostituito con codice un giudizio a lettura.
+   Nessuno ha un contatore di ciò che non è stato ripetuto, quindi il bilancio si
+   dichiara: **costo misurato, risparmio no**. I token spesi di certo senza ritorno
+   sono quelli dei 148 testamenti che nessuno ha letto.
 
 Sulla forma delle righe che entrano nella carta, due regole pagate care.
 **L'attribuzione è verificabile, non tipografica**: ogni riga cita qualcosa che

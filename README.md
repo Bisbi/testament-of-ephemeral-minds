@@ -128,6 +128,7 @@ number, or declared not executed. Nothing here says the method corrects itself.
 | Session testaments that name the human, against subagent testaments | 77 % vs 13 % | measured, not proven |
 | Those same testaments converting into charter rows | 10 % vs 0.6 % | measured, not proven |
 | The experiment of 4 August 2026, which would settle the question | described in the corpus, never carried out | declared not executed |
+| Token cost of the rite: 233 testaments in two months, median 403 words each for a subagent | ~116,000 words, about 185,000 output tokens; under 1 % of use | measured; the saving is not |
 
 Two of those rows need their defence written next to them, or the number is
 worth less than it looks.
@@ -353,6 +354,7 @@ dichiarato non eseguito. Niente qui dice che il metodo si corregge da solo.
 | Testamenti di sessione che nominano l'umano, contro quelli dei subagenti | 77 % contro 13 % | misurato, non dimostrato |
 | Gli stessi testamenti che si convertono in righe della carta | 10 % contro 0,6 % | misurato, non dimostrato |
 | L'esperimento del 4 agosto 2026, quello che deciderebbe | descritto nel corpus, mai eseguito | dichiarato non eseguito |
+| Costo in token del rito: 233 testamenti in due mesi, mediana 403 parole per un subagente | ~116.000 parole, circa 185.000 token in uscita; sotto l'1 % dell'uso | misurato; il risparmio no |
 
 Due di quelle righe hanno bisogno che la loro difesa stia scritta accanto, o il
 numero vale meno di quanto sembra.
