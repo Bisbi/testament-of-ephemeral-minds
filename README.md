@@ -202,7 +202,7 @@ there is deliberately no Omarchy plugin here. The reasoning is in
 
 ## Cite
 
-Bibbò, G. (2026). *testament-of-ephemeral-minds: a constitution with a right of reply for coding agents* (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.22303062 — `CITATION.cff` carries the same record.
+Bibbò, G. (2026). *testament-of-ephemeral-minds: a constitution with a right of reply for coding agents* (v0.1.1). Zenodo. https://doi.org/10.5281/zenodo.22303062 — `CITATION.cff` carries the same record.
 
 ## Licenses
 
@@ -428,7 +428,7 @@ ragionamento sta in [docs/ON-OMARCHY.md](docs/ON-OMARCHY.md).
 
 ## Citare
 
-Bibbò, G. (2026). *testament-of-ephemeral-minds: a constitution with a right of reply for coding agents* (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.22303062 — lo stesso record è in `CITATION.cff`.
+Bibbò, G. (2026). *testament-of-ephemeral-minds: a constitution with a right of reply for coding agents* (v0.1.1). Zenodo. https://doi.org/10.5281/zenodo.22303062 — lo stesso record è in `CITATION.cff`.
 
 ## Licenze
 

@@ -4,8 +4,8 @@ title: "testament-of-ephemeral-minds: a constitution with a right of reply for c
 authors:
   - family-names: Bibbo
     given-names: Giovanni
-version: 0.1.0
-date-released: 2026-09-03
+version: 0.1.1
+date-released: 2026-09-07
 url: "https://bisbi.github.io/testament-of-ephemeral-minds/"
 repository-code: "https://github.com/Bisbi/testament-of-ephemeral-minds"
 doi: 10.5281/zenodo.22303062

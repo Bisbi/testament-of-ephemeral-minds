@@ -1,7 +1,7 @@
 {
   "name": "toem",
   "description": "The testament of ephemeral minds: a constitution with a right of reply, a testament rite for every mind that works in your repo, a register for human decisions, and guardians that keep the charter honest.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": { "name": "Giovanni Bibbo" },
   "license": "MIT",
   "repository": "https://github.com/Bisbi/testament-of-ephemeral-minds",

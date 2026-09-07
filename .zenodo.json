@@ -8,7 +8,7 @@
   "keywords": ["coding agents", "Claude Code", "constitution", "testament", "agent memory", "human-in-the-loop", "AI governance", "software practice"],
   "license": "MIT",
   "language": "eng",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "related_identifiers": [
     { "identifier": "https://bisbi.github.io/testament-of-ephemeral-minds/", "relation": "isDocumentedBy", "resource_type": "publication-other" },
     { "identifier": "https://github.com/Bisbi/testament-of-ephemeral-minds", "relation": "isSupplementTo", "resource_type": "software" }
